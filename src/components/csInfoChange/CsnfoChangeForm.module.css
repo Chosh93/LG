@@ -1,0 +1,54 @@
+.title_ico_text {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-left: 1.6rem;
+
+  &::before {
+    display: inline-block;
+    width: 1.1429rem;
+    height: 1.1429rem;
+    background-image: url(/ico_warning.png);
+    background-size: 1.1429rem 1.1429rem;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    filter: grayscale(100%) brightness(0) saturate(0) opacity(70%);
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+  }
+  &.align_top {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    padding-left: 1.714285714285714rem;
+    font-size: var(--fs13);
+    font-weight: 400;
+    color: var(--Neutral-700, #6e6e6e);
+
+    &::before {
+      display: inline-block;
+      width: 1.428571428571429rem;
+      height: 1.428571428571429rem;
+      background-image: url(/ico_warning.png);
+      background-size: 1.428571428571429rem 1.428571428571429rem;
+      background-position: 50% 50%;
+      background-repeat: no-repeat;
+      content: '';
+      position: absolute;
+      top: 0.7142857142857143rem;
+      left: 0;
+    }
+  }
+}
+.button {
+  background-color: black;
+  color: white;
+  border: none;
+}
+
+.button:hover {
+  background-color: #333;
+}

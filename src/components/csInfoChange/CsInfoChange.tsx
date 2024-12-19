@@ -1,18 +1,28 @@
 
 import { useState } from "react";
 import CsInfoChangeStepper from "./CsInfoStepper";
-import CsInfoBox from "./CsInfoBox";
+import CsInfoBox, { CsInfoBoxProps } from "./CsInfoBox";
 import CsInfoChangeForm from "./CsInfoChangeForm";
+import { Button, Flex, Group } from "@mantine/core";
 
-export default function CsInfoChangeComp() {
- const [active, setActive] = useState<number>(0);
-     const nextStep = () => setActive((current) => (current < 3) ? current + 1 : current);
-     const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
-   return (
-     <>
-       <CsInfoChangeStepper active={active}/>
-       <CsInfoBox />
-       {active === 0 && <CsInfoChangeForm />}
-     </>
-   );
+interface CsInfoChangeProps {
+  stepper: number;
+  prev: () => void;
+  next: () => void;
+  infoBox: CsInfoBoxProps;
+}
+
+export default function CsInfoChangeComp({stepper, infoBox, next, prev}: CsInfoChangeProps) {
+
+  return (
+    <>
+      <CsInfoChangeStepper active={stepper}/>
+      <CsInfoBox planName={infoBox.planName} serviceName={infoBox.serviceName} />
+      {stepper === 0 && <CsInfoChangeForm />}
+      <Flex justify="space-between" style={{marginTop: '15px'}}>
+        <Button onClick={prev}>이전</Button>
+        <Button onClick={next}>다음</Button>
+      </Flex>
+    </>
+  );
 };

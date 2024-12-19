@@ -1,6 +1,6 @@
 import { Stepper } from "@mantine/core";
 
-interface CsInfoChangeStepperProps {
+export interface CsInfoChangeStepperProps {
     active: number;
 }
 
