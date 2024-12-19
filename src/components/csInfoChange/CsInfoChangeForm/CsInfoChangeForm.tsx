@@ -139,8 +139,8 @@ export default function CsInfoChangeForm({form}: CsInfoChangeFormProps) {
                     </Table.Tr>
                 </Table.Tbody>
             </Table>
-            <Modal opened={modalOpen} onClose={() => setModalOpen(false)}>
-                <SearchAddress onComplete={searchComplete}/>
+            <Modal title='주소 검색' opened={modalOpen} onClose={() => setModalOpen(false)}>
+                <SearchAddress onComplete={searchComplete} autoClose/>
             </Modal>
         </>
     )

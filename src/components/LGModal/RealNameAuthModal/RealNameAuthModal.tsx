@@ -25,6 +25,10 @@ export default function RealNameAuthModal({ opened, onClose }: RealNameAuthModal
         }
     });
 
+    const handleCancel = () => {
+        form.reset();
+        onClose();
+    }
     return (
         <Modal
             withCloseButton={false}
@@ -132,7 +136,7 @@ export default function RealNameAuthModal({ opened, onClose }: RealNameAuthModal
 
                     {/* 버튼 그룹 */}
                     <Group justify="center" mt="lg">
-                        <Button variant="default" onClick={onClose}>취소</Button>
+                        <Button variant="default" onClick={handleCancel}>취소</Button>
                         <Button type="submit">저장</Button>
                     </Group>
                 </form>
