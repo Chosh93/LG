@@ -80,6 +80,9 @@ dependencies:
   react:
     specifier: 19.0.0
     version: 19.0.0
+  react-daum-postcode:
+    specifier: ^3.2.0
+    version: 3.2.0(react@19.0.0)
   react-dom:
     specifier: 19.0.0
     version: 19.0.0(react@19.0.0)
@@ -7131,6 +7134,14 @@ packages:
     resolution: {integrity: sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==}
     dependencies:
       safe-buffer: 5.2.1
+    dev: false
+
+  /react-daum-postcode@3.2.0(react@19.0.0):
+    resolution: {integrity: sha512-NHY8TUicZXMqykbKYT8kUo2PEU7xu1DFsdRmyWJrLEUY93Xhd3rEdoJ7vFqrvs+Grl9wIm9Byxh3bI+eZxepMQ==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 19.0.0
     dev: false
 
   /react-dom@19.0.0(react@19.0.0):

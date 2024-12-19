@@ -1,10 +1,6 @@
 import { Box, Title, Text, Flex, Stack } from "@mantine/core";
 import { IconDeviceMobile } from "@tabler/icons-react";
-
-export interface CsInfoBoxProps {
-    planName: string;
-    serviceName: string;
-}
+import { CsInfoBoxProps } from "../types";
 
 export default function CsInfoBox({planName, serviceName}: CsInfoBoxProps) {
   return (
@@ -18,14 +14,12 @@ export default function CsInfoBox({planName, serviceName}: CsInfoBoxProps) {
           {/* 요금제명과 요금정보 */}
           <Flex align="center" gap="lg">
             <Title order={6} style={{ minWidth: "120px" }}>요금제명</Title>
-            <Text>5G 프리미어 에센셜 / 85,000원</Text>
             <Text>{planName}</Text>
           </Flex>
 
           {/* 가입서비스명과 정보 */}
           <Flex align="center" gap="lg">
             <Title order={6} style={{ minWidth: "120px" }}>가입서비스명</Title>
-            <Text>이동통신 (010-****-5678)</Text>
             <Text>{serviceName}</Text>
           </Flex>
         </Stack>

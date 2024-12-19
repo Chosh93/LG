@@ -1,21 +1,29 @@
-import { Button, Flex, Group, Select, Stack, Table, Text, TextInput, Title } from '@mantine/core';
-import { useForm } from '@mantine/form';
+import { Button, Flex, Group, Modal, Select, Stack, Table, Text, TextInput, Title } from '@mantine/core';
 import classes from './CsnfoChangeForm.module.css';
+import { useState } from 'react';
+import SearchAddress from 'react-daum-postcode';
+import { CsInfoChangeFormProps } from '../types';
 
-export default function CsInfoChangeForm() {
-    
-    const csInfoChangeForm = useForm({
-        initialValues: {
-            userName: '',
-            userZipCode: '',
-            userAddress1: '',
-            userAddress2: '',
-            userPhoneType: '',
-            userPhone: '',
-            userEmail1: '',
-            userEmail2: '',
-        }
-    });
+export default function CsInfoChangeForm({form}: CsInfoChangeFormProps) {
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+    const phoneSelect = [
+        { value: 'mobile', label: '휴대폰' },
+        { value: 'landline', label: '유선전화' },
+    ];
+
+    const emailSelect = [
+        {value: '', label: '직접입력'},
+        {value: 'gmail.com', label: 'gmail.com'},
+        {value: 'naver.com', label: 'naver.com'},
+        {value: 'daum.com', label: 'daum.com'}, 
+    ];
+
+    const searchComplete = (data: any) => {
+        form.setFieldValue('userZipCode', data.zonecode);
+        form.setFieldValue('userAddress1', data.address);
+        setModalOpen(false);
+    }
 
     return (
         <>
@@ -35,7 +43,7 @@ export default function CsInfoChangeForm() {
                             <Group>
                                 <TextInput
                                     placeholder='이름을 입력하세요.'
-                                    {...csInfoChangeForm.getInputProps('userName')}
+                                    {...form.getInputProps('userName')}
                                     style={{flex: 1}}
                                 />
                                 <Button className={classes.button} style={{ marginLeft: '10px'}}>실명확인</Button>
@@ -49,7 +57,7 @@ export default function CsInfoChangeForm() {
                         <Table.Td>
                             <Group>
                                 <TextInput
-                                    {...csInfoChangeForm.getInputProps('userZipCode')}
+                                    {...form.getInputProps('userZipCode')}
                                     readOnly
                                     onClick={() => {
                                         console.log('주소 검색 버튼 클릭!')
@@ -59,7 +67,7 @@ export default function CsInfoChangeForm() {
                                         className={classes.button}
                                             onClick={() => {
                                                 // 주소 검색 로직 호출
-                                                console.log('주소 검색 버튼 클릭!');
+                                                setModalOpen(true);
                                             }}
                                             fullWidth
                                         >
@@ -70,13 +78,14 @@ export default function CsInfoChangeForm() {
                                 />
                                 <TextInput
                                     disabled
-                                    {...csInfoChangeForm.getInputProps('userAddress1')}
+                                    {...form.getInputProps('userAddress1')}
                                     style={{ flex: 1}}
                                 />
                             </Group>
                             <TextInput
                                 placeholder='상세주소를 입력하세요.'
-                                {...csInfoChangeForm.getInputProps('userAddress2')}
+                                value={form.values.userAddress2}
+                                onChange={(value) => form.setFieldValue('userAddress2', value.target.value)}
                                 style={{marginTop: '10px'}}
                             />
                         </Table.Td>
@@ -87,9 +96,15 @@ export default function CsInfoChangeForm() {
                         </Table.Th>
                         <Table.Td>
                             <Group>
-                                <Select/>
+                                <Select 
+                                    data={phoneSelect}
+                                    value={form.values.userPhoneType}
+                                    onChange={(value) => form.setFieldValue('userPhoneType', value as string || '')}
+                                />
                                 <TextInput
                                     placeholder="'-'없이 숫자만 입력하세요"
+                                    value={form.values.userPhone}
+                                    onChange={(value) => form.setFieldValue('userPhone', value.target.value)}
                                     style={{flex: 1}}
                                 />
                             </Group>
@@ -104,20 +119,29 @@ export default function CsInfoChangeForm() {
                                 <TextInput 
                                     style={{flex: 1, marginRight: '5px'}}
                                     placeholder='이메일 주소를 입력해주세요'
-                                    {...csInfoChangeForm.getInputProps('userEmail1')}
+                                    {...form.getInputProps('userEmail1')}
                                 />
                                 @
                                 <TextInput 
                                     style={{flex: 1, marginRight: '5px', marginLeft: '5px'}}
-                                    {...csInfoChangeForm.getInputProps('userEmail2')}
+                                    {...form.getInputProps('userEmail2')}
                                 />
-                                <Select style={{flex: 1, marginRight: '5px', marginLeft: '5px'}}/>
+                                <Select 
+                                    data={emailSelect}
+                                    value={form.values.userEmail2} 
+                                    onChange={(value) => form.setFieldValue('userEmail2', value as string || '')}
+                                    allowDeselect={false}
+                                    style={{flex: 1, marginRight: '5px', marginLeft: '5px'}}
+                                />
                                 <Button className={classes.button} style={{marginLeft: '5px'}}>인증</Button>
                             </Flex>
                         </Table.Td>
                     </Table.Tr>
                 </Table.Tbody>
             </Table>
+            <Modal opened={modalOpen} onClose={() => setModalOpen(false)}>
+                <SearchAddress onComplete={searchComplete}/>
+            </Modal>
         </>
     )
 }
