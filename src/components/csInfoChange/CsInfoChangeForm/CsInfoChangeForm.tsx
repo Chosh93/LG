@@ -4,14 +4,15 @@ import { useState } from 'react';
 import SearchAddress from 'react-daum-postcode';
 import { CsInfoChangeFormProps } from '../types';
 
-export default function CsInfoChangeForm({form}: CsInfoChangeFormProps) {
+export default function CsInfoChangeForm({ form }: CsInfoChangeFormProps) {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     const phoneSelect = [
-        { value: 'mobile', label: '휴대폰' },
-        { value: 'landline', label: '유선전화' },
+        { value: 'mobile', label: '모바일전화번호' },
+        { value: 'landline', label: '유선전화번호' },
+        { value: 'home', label: '홈인증번호'},
     ];
-
+ 
     const emailSelect = [
         {value: '', label: '직접입력'},
         {value: 'gmail.com', label: 'gmail.com'},

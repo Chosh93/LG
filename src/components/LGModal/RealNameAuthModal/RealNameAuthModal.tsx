@@ -1,3 +1,4 @@
+import { useRNAuthForm } from '@/utils/hooks/form/CsInfoChange/useRNAuthForm';
 import {
     Modal,
     TextInput,
@@ -6,7 +7,6 @@ import {
     Group, Text,
     Table, Flex
 } from '@mantine/core';
-import { useForm } from '@mantine/form';
 import { IconInfoCircle } from '@tabler/icons-react';
 
 interface RealNameAuthModalProps {
@@ -15,15 +15,7 @@ interface RealNameAuthModalProps {
 }
 
 export default function RealNameAuthModal({ opened, onClose }: RealNameAuthModalProps) {
-    const form = useForm({
-        initialValues: {
-            name: '',
-            residentNumber: '',
-            registrationDate: '',
-            dateOfBirth: '',
-            dateOfRegistration: ''
-        }
-    });
+    const { form } = useRNAuthForm();
 
     const handleCancel = () => {
         form.reset();

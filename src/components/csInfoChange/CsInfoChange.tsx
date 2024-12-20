@@ -3,29 +3,20 @@ import CsInfoChangeStepper from "./CsInfoStepper/CsInfoStepper";
 import CsInfoBox from "./CsInfoBox/CsInfoBox";
 import CsInfoChangeForm from "./CsInfoChangeForm/CsInfoChangeForm";
 import { Button, Flex } from "@mantine/core";
-import { useForm } from "@mantine/form";
 import { useState } from "react";
 import { CsInfoChangeProps } from "./types";
 import RealNameAuthModal from "../LGModal/RealNameAuthModal/RealNameAuthModal";
+import { useCsChangeForm } from "@/utils/hooks/form/CsInfoChange/useCsChangeForm";
+import CsInfoChangeAgree from "./CsInfoChangeAgree/CsInfoChangeAgree";
 
 export default function CsInfoChangeComp({stepper, infoBox, next, prev}: CsInfoChangeProps) {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-  const csInfoChangeForm = useForm({
-      initialValues: {
-          userName: '',
-          userZipCode: '',
-          userAddress1: '',
-          userAddress2: '',
-          userPhoneType: '',
-          userPhone: '',
-          userEmail1: '',
-          userEmail2: '',
-      }
-  });
+  const { form } = useCsChangeForm();
 
   const handleNext = () => {
-    console.log('Form Values:', csInfoChangeForm.values);
+    console.log('Form Values:', form.values);
+    console.log(stepper);
     next();
   };
 
@@ -43,7 +34,8 @@ export default function CsInfoChangeComp({stepper, infoBox, next, prev}: CsInfoC
     <>
       <CsInfoChangeStepper active={stepper}/>
       <CsInfoBox planName={infoBox.planName} serviceName={infoBox.serviceName} />
-      {stepper === 0 && <CsInfoChangeForm form={csInfoChangeForm} />}
+      {stepper === 0 && <CsInfoChangeForm form={form} />}
+      {stepper === 1 && <CsInfoChangeAgree />}
       <Flex justify="space-between" style={{marginTop: '15px'}}>
         <Button onClick={prev}>이전</Button>
         <Button onClick={handleNext}>다음</Button>
