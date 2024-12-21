@@ -19,11 +19,9 @@ describe('<CsInfoStepper />', () => {
     it('렌더링 시 해당 mockProps 전달 TEST', () => {
         renderWithMantine(<CsInfoChangeStepper {...mockProps} />);
 
-        // stepper 액티브 확인
         expect(screen.getByText('변경정보')).toBeInTheDocument();
         expect(screen.getByText('동의/서명')).toBeInTheDocument();
         expect(screen.getByText('구비서류')).toBeInTheDocument();
-
         
     });
 
