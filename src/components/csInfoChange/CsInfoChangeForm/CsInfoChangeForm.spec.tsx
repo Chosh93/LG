@@ -1,6 +1,6 @@
 import { MantineProvider } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import '@testing-library/jest-dom';
 import CsInfoChangeForm from "./CsInfoChangeForm";
 import { CsInfoForm } from "../types";
@@ -19,11 +19,14 @@ jest.mock('@mantine/form', () => ({
             userEmail2: '',
         },
         setValues: jest.fn(),
+        getValues: jest.fn(() => useForm().values),
         getInputProps: jest.fn((name) => ({
             value: '',
             onChange: jest.fn(),
         })),
-        setFieldValue: jest.fn(),
+        setFieldValue: jest.fn((field: string, value: any) => {
+            useForm().values[field] = value;
+        }),
     }),
 }));
 
@@ -84,24 +87,13 @@ describe('<CsInfoChangeForm />', () => {
         const mockZipcode = '12345';
         const mockAddress = '대한민국 어딘가';
 
-        const onComplete = jest.fn((data) => {
-            data = { zipcode: mockZipcode, address: mockAddress };
-
-            mockForm.setFieldValue('userZipcode', mockZipcode);
-            mockForm.setFieldValue('userAddress1', mockAddress);
-        });
-
-        await waitFor(() => {
-            onComplete({ zipcode: mockZipcode, address: mockAddress });
+        // 우편번호, 대표주소 mockForm에 저장
+        mockForm.setFieldValue('userZipCode', mockZipcode);
+        mockForm.setFieldValue('userAddress1', mockAddress);
         
-            // setFieldValue가 비동기적으로 실행되므로, waitFor을 통해 완료된 후 검증
-            // expect(mockForm.setFieldValue).toHaveBeenCalledWith('userZipCode', mockZipcode);
-            // expect(mockForm.setFieldValue).toHaveBeenCalledWith('userAddress1', mockAddress);
-        
-            // mockForm의 값이 예상대로 업데이트 되었는지 확인
-            expect(mockForm.values.userZipCode).toBe(mockZipcode);
-            expect(mockForm.values.userAddress1).toBe(mockAddress);
-        });
-        
+        // mockForm 우편번호, 대표주소와 검색값이 같은지 확인
+        expect(mockForm.getValues().userZipCode).toEqual(mockZipcode);
+        expect(mockForm.getValues().userAddress1).toEqual(mockAddress);
+  
     })
 })

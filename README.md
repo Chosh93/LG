@@ -33,3 +33,14 @@ _**npm & yarn 사용 금지 !!!**_
 ```bash
     pnpm run test
 ```
+
+## TDD 
+describe : 테스트 그룹화
+it : 테스트 정의
+expect : 테스트 결과
+mock : 특정 모듈이나 함수 동작을 대체
+render : 컴포넌트를 가상 DOM에 렌더링 하여 테스트 환경 제공
+screen : render 된 컴포넌트의 요소 탐색
+- getByText : 지정한 텍스트를 가진 요소 반환
+waitFor : 비동기 동작이 완료될 때까지 기다림
+userEvent : 사용자의 동작을 시뮬레이션
